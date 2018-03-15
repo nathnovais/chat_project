@@ -1,22 +1,27 @@
-// user constructor
-function User (username, email) {
-  this.username = username
-  this.email = email
-}
-// message constructor
-function Message (text, date, User) {
-  this.text = text
-  this.createdAT = new Date()
-  this.User = User
-}
-
 var Chat = (function() {
-  //Users
+
+  //Users list
   let users = []
+
+  // user constructor
+  function User (username, email) {
+    this.username = username
+    this.email = email
+  }
+
+
+  //message record list
   let messages = []
+  // message constructor
+  function Message (text, User) {
+    this.text = text
+    this.createdAT = new Date()
+    this.User = User
+  }
 
   let module = {}
 
+//User joining chat
   module.joinChat = function(user) {
 
     let userAlreadyConnected = false
@@ -25,53 +30,51 @@ var Chat = (function() {
         if(users[i] == user) {
           userAlreadyConnected = true
         }
-    }
+      }
 
-    if (userAlreadyConnected) {
-      console.log('user already connected', user)
-    } else {
-      //add the user
+      if (userAlreadyConnected) {
       users.push(user)
-      console.log('user is trying to join', user)
-
+      console.log('User is joining chat', user)
+    } else {
+      console.log('User is already connected', user)
     }
-  }
+}
 
-    module.sendChat = function (message) {
-//
+    module.sendChat = function(messages) {
+
       messages.push(message)
-      console.log("show all messages:", messages)
+      console.log("Show all messages:", messages)
     }
 
+//a user needs to be able to leave
+    module.leaveChat = function(user) {
+      users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop delets the last one.  
+      console.log('User left chat', user)
+    }
 
-
-  module.helloWorld = function () {
-    console.log('Hello World')
-  }
-
-  /*let messages = []
-  ...
-  module.sendChat = function (message)
-  */
 
   return module
-
 })()
+
+//let message1 = new Message("Testing if it works", user1);
+
+console.log(Chat.messages); //it works now
+
 
 
 //FOR TESTING:
-let user1 = new User("name", "email@asd.se");
-let user2 = new User("name", "email@asd.se");
+//let user1 = new User("name", "email@asd.se");
+//let user2 = new User("name", "email@asd.se");
 
-Chat.joinChat(user1)
+//Chat.joinChat(user1)
 
-let message1 = new Message("Testing if it works", "15.03.18", user1);
-Chat.sendChat(message1)
-//console.log(messages); --> doesn't work because the array is declared w/block scope
-
-
+//let message1 = new Message("Testing if it works", user1);
+//let message2 = new Message("Testing again", user1);
+//Chat.sendChat(message1)
 
 
+
+/*
 
 //***NOTES: SEARCHING***
 //as the drinks of a specific price search
@@ -93,5 +96,4 @@ let results = messages.filter(m => {
 
         //if we want it to be not case sensitive you can do it differently
         //to begin with this is fine!   We could use a search method
-
-} )
+ */
