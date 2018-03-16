@@ -3,15 +3,18 @@ var Chat = (function() {
   //Users list
   let users = []
 
-  // user constructor
+  //User constructor
   function User (username, email) {
     this.username = username
     this.email = email
+    if(new.target) {
+      return new User
+    }
   }
-
 
   //message record list
   let messages = []
+
   // message constructor
   function Message (text, User) {
     this.text = text
@@ -21,7 +24,7 @@ var Chat = (function() {
 
   let module = {}
 
-//User joining chat
+  //User joining chat
   module.joinChat = function(user) {
 
     let userAlreadyConnected = false
@@ -41,24 +44,41 @@ var Chat = (function() {
 }
 
     module.sendChat = function(messages) {
-
-      messages.push(message)
+      if (Message != null) {
+        messages.push(Message)
+      } else {
       console.log("Show all messages:", messages)
     }
+  }
 
-//a user needs to be able to leave
+    //searching within messages
+    module.searchMessages = function(messages) {
+      let searchKeyword = prompt('What are you searching for?', ' ')
+      let results = messages.filter(search => {
+        if (search.messages.indexOf(searchKeyword) != -1) {
+          console.log(searchKeyword)
+        } else {
+          console.log('Search was not found')
+        }
+      })
+          }
+
+    //a user needs to be able to leave
     module.leaveChat = function(user) {
-      users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop delets the last one.  
-      console.log('User left chat', user)
-    }
+      let userIsConnected = true
+      if (user == userIsConnected) {
+        users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop only delets the last elem.
+        console.log(user + ' left chat')
+      } else {
+          //code?
+      }
 
 
   return module
 })()
 
-//let message1 = new Message("Testing if it works", user1);
 
-console.log(Chat.messages); //it works now
+console.log(Chat.messages);
 
 
 
