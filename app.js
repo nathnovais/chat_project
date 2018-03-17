@@ -36,10 +36,11 @@ var Chat = (function() {
       }
 
       if (userAlreadyConnected) {
+      console.log('User is already connected', user)
+      //This should be changed back - if userAlreadyConnected is true we shouldn't add the user
+    } else {
       users.push(user)
       console.log('User is joining chat', user)
-    } else {
-      console.log('User is already connected', user)
     }
 }
 
