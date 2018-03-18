@@ -1,30 +1,36 @@
-var Chat = (function() {
-
-  //Users list
-  let users = []
-
-  //User constructor
+//User constructor
   function User (username, email) {
     this.username = username
     this.email = email
-    if(new.target) {
+  /*  if(new.target) {
       return new User
-    }
+            //What is this?
+    } */
   }
+//the browser just kept complaining that the user was undefined when
+//I wanted to test other stuff - so I tried moving it back up so it would shut up ;)
 
-  //message record list
+var Chat = (function() {
+
+//Users list
+  let users = []
+
+
+
+//message record list
   let messages = []
 
-  // message constructor
+// message constructor
   function Message (text, User) {
     this.text = text
     this.createdAT = new Date()
     this.User = User
+    // ^don't know if you can assign the user like this (object oriented)
   }
 
   let module = {}
 
-  //User joining chat
+// User joining chat
   module.joinChat = function(user) {
 
     let userAlreadyConnected = false
@@ -44,9 +50,30 @@ var Chat = (function() {
     }
 }
 
-    module.sendChat = function(messages) {
-      if (Message != null) {
-        messages.push(Message)
+
+//a user needs to be able to leave
+module.leaveChat = function(user) {
+  /*let userIsConnected = true
+  if (user == userIsConnected) {
+    users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop only delets the last elem.
+    console.log(user + ' left chat')
+  } else {
+      //code?
+  }*/
+//MY SUGGESTION - and it works somewhat :-D
+    users.splice(users.indexOf(user), 1)
+    console.log(user + ' left chat')
+    console.log(users) //just for seeing that the user has actually been removed from the array
+
+}
+
+
+
+
+// method for creating a new message
+    module.sendChat = function(message) {
+      if (message != null) {
+        messages.push(message)
       } else {
       console.log("Show all messages:", messages)
     }
@@ -64,17 +91,9 @@ var Chat = (function() {
       })
           }
 
-    //a user needs to be able to leave
-    module.leaveChat = function(user) {
-      let userIsConnected = true
-      if (user == userIsConnected) {
-        users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop only delets the last elem.
-        console.log(user + ' left chat')
-      } else {
-          //code?
-      }
 
 
+//End of module
   return module
 })()
 
@@ -84,7 +103,7 @@ console.log(Chat.messages);
 
 
 //FOR TESTING:
-//let user1 = new User("name", "email@asd.se");
+let user1 = new User("name", "email@asd.se");
 //let user2 = new User("name", "email@asd.se");
 
 //Chat.joinChat(user1)
