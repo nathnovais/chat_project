@@ -46,33 +46,39 @@ var Chat = (function() {
       // Thats what I was a little confused --> I was thinking if the
     } else {
       users.push(User)
-      console.log(User + ' is joining chat')
+      console.log(User.username + ' is joining chat')
     }
 }
 
 //a user needs to be able to leave
 module.leaveChat = function(User) {
-  /*let userIsConnected = true
-  if (user == userIsConnected) {
-    users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop only delets the last elem.
-    console.log(user + ' left chat')
-  } else {
-      //code?
-  }*/
+  //let userIsConnected = true
+  //if (user == userIsConnected) {
 //MY SUGGESTION - and it works somewhat :-D
-    users.splice(users.indexOf(user), 1)
-    console.log(user + ' left chat')
+    users.splice(users.indexOf(User), 1)
+    console.log(User.username + ' left chat')
     console.log(users) //just for seeing that the user has actually been removed from the array
 }
 
 // method for creating a new message
     module.sendChat = function(Message) {
       if (Message != null) {
-        messages.push(messages)
+        messages.push(Message)
       } else {
-      console.log("Show all messages:", messages)
+      console.log("Show all messages: ", messages)
     }
   }
+
+//Just a test to show the messages in the chat - it works!
+//(I think we need to create functions in order to see the messages outside the module)
+  module.showMessages = function() {
+    if(Message != null) {
+      console.log(messages)
+    }else {
+      console.log("not working")
+    }
+  }
+
 
     //searching within messages
     module.searchMessages = function(messages) {
@@ -87,7 +93,7 @@ module.leaveChat = function(User) {
           }
 
 /* I THOUGHT I HAD AN idea.. BUT IT WENT AWAY AGAIN...
-DID YOUR'S WORK?
+DID YOUR'S WORK? --> I can't figure out a way to show the messages array, so I'm not sure if it works. (NN)
 let keyword = "Testing again"
 
     module.searchChat = function(keyword) {
@@ -103,7 +109,7 @@ let keyword = "Testing again"
 //CENSOR MESSAGES: ...long shot..
 module.censorMessages = function() {
     let badMessages = messages.filter(m => {
-      if (m.text = "fuck") {
+      if (m.text == "fuck") {
     console.log(badMessages)
   }
 })
@@ -117,23 +123,30 @@ module.censorMessages = function() {
         }
     } */
 
+
+
 //End of module
   return module;
 })()
 
 
 //FOR TESTING:
-let user1 = new User("name", "email@asd.se");
-let user2 = new User("non", "email@asd.se");
+let user1 = new User("Nat", "email@asd.se");
+let user2 = new User("Lena", "email@asd.se");
 
 //Chat.joinChat(user1)
 
 let message1 = new Message("Testing if it works", user1);
 let message2 = new Message("Testing again", user1);
 let message3 = new Message("fuck", user1);
-//Chat.sendChat(message1)
+Chat.sendChat(message1)
+Chat.sendChat(message2)
+Chat.sendChat(message3)
 
 console.log(Chat.joinChat(user1));
+console.log(Chat.joinChat(user2));
+
+Chat.searchMessages();
 
 
 
