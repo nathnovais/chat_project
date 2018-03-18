@@ -7,8 +7,18 @@
             //What is this?
     } */
   }
+
+// message constructor
+  function Message (text, User) {
+      this.text = text
+      this.createdAT = new Date()
+      this.User = User
+      // ^don't know if you can assign the user like this (object oriented)
+  }
+
 //the browser just kept complaining that the user was undefined when
 //I wanted to test other stuff - so I tried moving it back up so it would shut up ;)
+//and then it did the same when I wanted to test message function - and Chat.Message doesn't work
 
 var Chat = (function() {
 
@@ -19,14 +29,6 @@ var Chat = (function() {
 
 //message record list
   let messages = []
-
-// message constructor
-  function Message (text, User) {
-    this.text = text
-    this.createdAT = new Date()
-    this.User = User
-    // ^don't know if you can assign the user like this (object oriented)
-  }
 
   let module = {}
 
@@ -91,6 +93,34 @@ module.leaveChat = function(user) {
       })
           }
 
+/* I THOUGHT I HAD AN idea.. BUT IT WENT AWAY AGAIN...
+DID YOUR'S WORK?
+let keyword = "Testing again"
+
+    module.searchChat = function(keyword) {
+
+      let results = messages.filter(m => {
+
+          return m.message.indexOf(keyword) !== -1
+      } )
+    }
+*/
+
+
+//CENSOR MESSAGES: ...long shot..
+module.censorMessages = function() {
+    let badMessages = messages.filter(m => m.text = "fuck");
+    console.log(badMessages)
+
+    /*let badWords = false
+    for (let i = 0; i < messages.lenght; i++) {
+        if(messages[i] == message) {
+
+        }
+    } */
+
+}
+
 
 
 //End of module
@@ -108,8 +138,9 @@ let user1 = new User("name", "email@asd.se");
 
 //Chat.joinChat(user1)
 
-//let message1 = new Message("Testing if it works", user1);
-//let message2 = new Message("Testing again", user1);
+let message1 = new Message("Testing if it works", user1);
+let message2 = new Message("Testing again", user1);
+let message3 = new Message("fuck", user1);
 //Chat.sendChat(message1)
 
 
