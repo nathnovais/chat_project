@@ -2,10 +2,7 @@
   function User (username, email) {
     this.username = username
     this.email = email
-  /*  if(new.target) {
-      return new User
-            //What is this?
-    } */
+
   }
 
 // message constructor
@@ -14,18 +11,18 @@
       this.createdAT = new Date()
       this.User = User
       // ^don't know if you can assign the user like this (object oriented)
+      //I was wondering this too, I remember we did something like it with JSP but I dont remember how.
   }
 
 //the browser just kept complaining that the user was undefined when
 //I wanted to test other stuff - so I tried moving it back up so it would shut up ;)
 //and then it did the same when I wanted to test message function - and Chat.Message doesn't work
 
+
 var Chat = (function() {
 
 //Users list
   let users = []
-
-
 
 //message record list
   let messages = []
@@ -33,28 +30,28 @@ var Chat = (function() {
   let module = {}
 
 // User joining chat
-  module.joinChat = function(user) {
+  module.joinChat = function(User) {
 
     let userAlreadyConnected = false
 
     for (let i = 0; i < users.lenght; i++) {
-        if(users[i] == user) {
+        if(users[i] == User) {
           userAlreadyConnected = true
         }
       }
 
       if (userAlreadyConnected) {
-      console.log('User is already connected', user)
+      console.log('User is already connected', User)
       //This should be changed back - if userAlreadyConnected is true we shouldn't add the user
+      // Thats what I was a little confused --> I was thinking if the
     } else {
-      users.push(user)
-      console.log('User is joining chat', user)
+      users.push(User)
+      console.log(User + ' is joining chat')
     }
 }
 
-
 //a user needs to be able to leave
-module.leaveChat = function(user) {
+module.leaveChat = function(User) {
   /*let userIsConnected = true
   if (user == userIsConnected) {
     users.pop(user) //just an idea, I think we would have to find its place in the array to exit --> pop only delets the last elem.
@@ -66,16 +63,12 @@ module.leaveChat = function(user) {
     users.splice(users.indexOf(user), 1)
     console.log(user + ' left chat')
     console.log(users) //just for seeing that the user has actually been removed from the array
-
 }
 
-
-
-
 // method for creating a new message
-    module.sendChat = function(message) {
-      if (message != null) {
-        messages.push(message)
+    module.sendChat = function(Message) {
+      if (Message != null) {
+        messages.push(messages)
       } else {
       console.log("Show all messages:", messages)
     }
@@ -86,7 +79,7 @@ module.leaveChat = function(user) {
       let searchKeyword = prompt('What are you searching for?', ' ')
       let results = messages.filter(search => {
         if (search.messages.indexOf(searchKeyword) != -1) {
-          console.log(searchKeyword)
+          return results;
         } else {
           console.log('Search was not found')
         }
@@ -109,8 +102,13 @@ let keyword = "Testing again"
 
 //CENSOR MESSAGES: ...long shot..
 module.censorMessages = function() {
-    let badMessages = messages.filter(m => m.text = "fuck");
+    let badMessages = messages.filter(m => {
+      if (m.text = "fuck") {
     console.log(badMessages)
+  }
+})
+}
+
 
     /*let badWords = false
     for (let i = 0; i < messages.lenght; i++) {
@@ -119,22 +117,14 @@ module.censorMessages = function() {
         }
     } */
 
-}
-
-
-
 //End of module
-  return module
+  return module;
 })()
-
-
-console.log(Chat.messages);
-
 
 
 //FOR TESTING:
 let user1 = new User("name", "email@asd.se");
-//let user2 = new User("name", "email@asd.se");
+let user2 = new User("non", "email@asd.se");
 
 //Chat.joinChat(user1)
 
@@ -142,6 +132,8 @@ let message1 = new Message("Testing if it works", user1);
 let message2 = new Message("Testing again", user1);
 let message3 = new Message("fuck", user1);
 //Chat.sendChat(message1)
+
+console.log(Chat.joinChat(user1));
 
 
 
