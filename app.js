@@ -14,7 +14,6 @@
   }
 
 
-
 var Chat = (function() {
 
 //Users list
@@ -31,7 +30,7 @@ var Chat = (function() {
     let userAlreadyConnected = false
 
     for (let i = 0; i < users.lenght; i++) {
-        if(users[i] == User) {
+        if(users[i] = User) {
           userAlreadyConnected = true
         }
       }
@@ -42,7 +41,7 @@ var Chat = (function() {
 
     } else {
       users.push(User)
-      console.log(User.username + ' is joining chat')
+      console.log(User.username + ' is joining chat', users)
     }
 }
 
@@ -55,68 +54,35 @@ module.leaveChat = function(User) {
 
 // method for creating a new message
     module.sendChat = function(Message) {
-      if (Message != null) {
+//censoring message inside sendChat method – not working!!
+      let badWords = 'fuck'
+      let censoredWords = messages.filter(m =>
+        m.Message.IndexOf(badWords) != -1)
+        return censoredWords
+      }
+
+     if (Message != null || censoredWords) {
+      //if (Message != null) {
         messages.push(Message)
         console.log("Show all messages: ", messages)
+      } else {
+        console.log("Message is not allowed")
       }
-      else {
-        console.log("not able to send message")
-      }
-  }
 
 
 
     //searching within messages
     //Note: We are kind of confused on the method as a whole, how it works
-    //But also with the parameter of the function (we tried searchkeyword also)
-    module.searchMessages = function() {
+      module.searchMessages = function(messages) {
       let searchKeyword = "Testing"
-      let results = messages.filter(search => {
-        if (search.messages.indexOf(searchKeyword) != -1) {
-          console.log(results);
-        } else {
-          console.log('Search was not found')
-        }
-      })
-          }
-
-/* Note: We tried different ways too
-let keyword = "Testing again"
-
-    module.searchChat = function(keyword) {
-
-      let results = messages.filter(m => {
-
-          return m.message.indexOf(keyword) !== -1
-      } )
+      let results = messages.filter(search =>
+         search.messages.indexOf(searchKeyword) != -1)
+        return results
     }
-*/
-
-
-//CENSOR MESSAGES: ...long shot..
-// again we don't really understand the method, how it could work and what it should do
-module.censorMessages = function() {
-    let badMessages = messages.filter(m => {
-      if (m.text == "fuck") {
-        console.log(badMessages)
-      }
-    })
-}
-
-    /*let badWords = false
-    for (let i = 0; i < messages.lenght; i++) {
-        if(messages[i] == message) {
-
-        }
-    } */
-
-
 
 //End of module
   return module;
 })()
-
-
 
 
 //FOR TESTING:
@@ -132,6 +98,9 @@ let message3 = new Message("fuck", user1);
 Chat.sendChat(message1)
 Chat.sendChat(message2)
 Chat.sendChat(message3)
+Chat.sendChat(new Message('Hohoho', user2));
 
 console.log(Chat.joinChat(user1));
 console.log(Chat.joinChat(user2));
+
+Chat.searchMessages();
