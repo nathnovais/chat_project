@@ -1,17 +1,15 @@
 //User constructor
-  function User (username, email) {
-    this.username = username
-    this.email = email
-
-  }
+function User (username, email) {
+  this.username = username
+  this.email = email
+}
 
 // message constructor
-  function Message (text, User) {
-      this.text = text
-      this.createdAT = new Date()
-      this.User = User
-      // ^don't know if you can assign the user like this (object oriented)
-  }
+function Message (text, User) {
+  this.text = text
+  this.createdAT = new Date()
+  this.User = User
+}
 
 
 var Chat = (function() {
@@ -22,6 +20,8 @@ var Chat = (function() {
 //message record list
   let messages = []
 
+  let badMessages = []
+
   let module = {}
 
 // User joining chat
@@ -29,56 +29,61 @@ var Chat = (function() {
 
     let userAlreadyConnected = false
 
-    for (let i = 0; i < users.lenght; i++) {
-        if(users[i] = User) {
-          userAlreadyConnected = true
+      for (let i = 0; i < users.length; i++) {
+
+          if(users[i].username === User.username) {
+            userAlreadyConnected = true
+          }
         }
+
+
+        if (userAlreadyConnected) {
+        console.log('Username is already taken or user is already connected', users)
+      } else {
+        users.push(User)
+        console.log(User.username + ' is joining chat', users)
       }
-      //the joining works, but the same user can be joing again
+  }
 
-      if (userAlreadyConnected) {
-      console.log('User is already connected', User)
-
-    } else {
-      users.push(User)
-      console.log(User.username + ' is joining chat', users)
+  //a user needs to be able to leave
+  module.leaveChat = function(User) {
+      users.splice(users.indexOf(User), 1)
+      console.log(User.username + ' left chat')
+      console.log(users)
     }
-}
 
-//a user needs to be able to leave
-module.leaveChat = function(User) {
-    users.splice(users.indexOf(User), 1)
-    console.log(User.username + ' left chat')
-    console.log(users)
-}
+    // method for creating a new message
+  module.sendChat = function(Message) {
+      //censoring message:
+      let badWords = false
 
-// method for creating a new message
-    module.sendChat = function(Message) {
-//censoring message inside sendChat method – not working!!
-      let badWords = 'fuck'
-      let censoredWords = messages.filter(m =>
-        m.Message.IndexOf(badWords) != -1)
-        return censoredWords
+      if (Message.text.indexOf('fuck') != -1) { //using text variable to find words in the message.
+          badWords = true;
+          //console.log('it found a bad word')
       }
 
-     if (Message != null || censoredWords) {
-      //if (Message != null) {
+     if (Message != null && badWords == false) {
         messages.push(Message)
         console.log("Show all messages: ", messages)
       } else {
-        console.log("Message is not allowed")
-      }
+        badMessages.push(Message)
+        console.log("Message is not allowed", badMessages)
 
+      }
+  }
 
 
     //searching within messages
     //Note: We are kind of confused on the method as a whole, how it works
-      module.searchMessages = function(messages) {
-      let searchKeyword = "Testing"
-      let results = messages.filter(search =>
-         search.messages.indexOf(searchKeyword) != -1)
-        return results
-    }
+  module.searchMessages = function(searchString) {
+      //making a new array with the messages from matching searchString either for text or user
+      let results = messages.filter(currentMessage => {
+        //condition of search: author and content
+        return (currentMessage.text.indexOf(searchString) != -1) || (currentMessage.User.username.indexOf(searchString) != -1)
+      })
+      return results;
+  }
+
 
 //End of module
   return module;
@@ -95,12 +100,13 @@ let user3 = new User("Test", "test@asd.se");
 let message1 = new Message("Testing if it works", user1);
 let message2 = new Message("Testing again", user1);
 let message3 = new Message("fuck", user1);
+
 Chat.sendChat(message1)
 Chat.sendChat(message2)
 Chat.sendChat(message3)
 Chat.sendChat(new Message('Hohoho', user2));
 
-console.log(Chat.joinChat(user1));
-console.log(Chat.joinChat(user2));
+Chat.joinChat(user1);
+Chat.joinChat(user2);
 
-Chat.searchMessages();
+//Chat.searchMessages();
