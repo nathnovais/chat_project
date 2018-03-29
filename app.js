@@ -74,7 +74,6 @@ var Chat = (function() {
 
 
     //searching within messages
-    //Note: We are kind of confused on the method as a whole, how it works
   module.searchMessages = function(searchString) {
       //making a new array with the messages from matching searchString either for text or user
       let results = messages.filter(currentMessage => {
@@ -91,7 +90,7 @@ var Chat = (function() {
 
 
 //FOR TESTING:
-let user1 = new User("Nat", "email@asd.se");
+/*let user1 = new User("Nat", "email@asd.se");
 let user2 = new User("Lena", "email@asd.se");
 let user3 = new User("Test", "test@asd.se");
 
@@ -109,4 +108,4 @@ Chat.sendChat(new Message('Hohoho', user2));
 Chat.joinChat(user1);
 Chat.joinChat(user2);
 
-//Chat.searchMessages();
+//Chat.searchMessages(); */
