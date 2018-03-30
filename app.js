@@ -95,7 +95,7 @@ let user1 = new User("Nat", "email@asd.se");
 let user2 = new User("Lena", "email@asd.se");
 let user3 = new User("Test", "test@asd.se");
 
-//Chat.joinChat(user1)
+Chat.joinChat(user1)
 
 let message1 = new Message("Testing if it works", user1);
 let message2 = new Message("Testing again", user1);
