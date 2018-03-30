@@ -78,8 +78,10 @@ var Chat = (function() {
       //making a new array with the messages from matching searchString either for text or user
       let results = messages.filter(currentMessage => {
         //condition of search: author and content
+              console.log("search was done"); // SHOWS THAT THE METHOD IS NOT RUN IN THE HTML
         return (currentMessage.text.indexOf(searchString) != -1) || (currentMessage.User.username.indexOf(searchString) != -1)
       })
+
       return results;
   }
 

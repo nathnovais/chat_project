@@ -1,3 +1,12 @@
+<!-- FOR HENNING:
+We have tried a lot of different things (hence the 2 doduments), I think the general problem is that we don't know
+or understand - or are able to find some help - as to how we connect the js-file and the html
+properly. We don't know what goes where.. since we previously just did the DOM directly in the html
+we are not sure if we should continue that or not, and have tried both.
+We know how to do the html, css and dom parts - it is the connection to the module that
+is really troubling us...
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,7 +126,7 @@ So maybe we shouldn't worry about it yet
 
 
 <!-- SCRIPT - Trying to connect to JS file -->
-
+<!-- SCRIPT - Trying to connect to JS file -->
   <script>
 
 //first tries to modify the user
@@ -130,12 +139,17 @@ So maybe we shouldn't worry about it yet
 
 //For the message input:
 
+  /* Note: It is not a problem getting the document and eventListener to work
+  The problem is connecting everything with the JS-file - where? and how?
+  -the functions and the arrays
+  */
     let sendButton = document.querySelector('#sendButton')
 
     sendButton.addEventListener("click", function (event) {
       let newParagraph = document.createElement("p")
-      let newMessage = document.querySelector('#chatMessage').value
-      newParagraph.innerHTML = Chat.sendChat(newMessage)
+      newParagraph.innerHTML = Chat.sendChat(document.querySelector('#chatMessage').value)
+      //let newMessage = document.querySelector('#chatMessage').value
+      //newParagraph.innerHTML = Chat.sendChat(newMessage)
       document.querySelector("div.mt-0").appendChild(newParagraph)
       event.preventDefault()
     })
@@ -157,8 +171,13 @@ So maybe we shouldn't worry about it yet
   */
 
 
-//For the search results
+//For the search results:
 
+  /*Note: This doesn't work, but the browser does show [object Object] in a bullet point
+  //when a word is searched for - and it shows 2 times when the word is in 2 messages
+  //something might be right.. there is something wrong with the output that is displayed..
+  //maybe also with the method as a whole since it disapears again
+  */
       let searchButton = document.querySelector('#searchButton')
       searchButton.addEventListener("click", function (event) {
           let resultMessage = document.createElement("li")
