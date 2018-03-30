@@ -8,24 +8,73 @@
   <!-- I just added his because I couldn't find anything and didn't want to spend time on this part -->
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <script src="app.js" charset="utf-8"></script>
+<!-- welcome message to user - I don't know how to connect username. -->
+  <h1> Welcome, user?? </h1>
 
-  <h1> Welcome to Chat App </h1>
+<!-- Div for creating the message box -->
+  <div class="boxMessage">
 
-<!-- I think maybe this part about login in the user will come in the
-following parts of the assignment, since he doesn't mention it in part 2
-So maybe we shouldn't worry about it yet
-- and just connect users as we have already done in the js file -->
-  <p> Enter your name to continue </p>
+    <ul>
+      <li> Hello </li>
+    </ul>
+  </div>
 
-  <form action="index.html" method="post">
-    <input type="text" value="insert username here"> </input>
-    <input type="submit" value="send">
-  </form>
+<!-- form and eventListener works showing the message like the shoppingList,
+but we need to connect to the functions and arrays in the JS file. -->
+    <form id="messageForm" action="index.html" method="post">
+      <input id="messageValue" type="text" value=" "> </input>
+      <input id="sendButton" type="submit" value="Send">
+    </form>
 
+  </div>
+
+<!-- eventListener for message form -->
+  <script>
+    let messageForm = document.querySelector('#messageForm')
+
+    messageForm.addEventListener("submit", function(event) {
+      let newMessage = document.createElement('li')
+      newMessage.innerHTML = document.querySelector('#messageValue').value
+      document.querySelector("ul").appendChild(newMessage)
+      event.preventDefault()
+    })
+  </script>
+
+<!-- Div for creating online users box -->
+  <div class="usersBox">
+
+<!-- form for searching messages - I though it could be on top of the users list -->
+    <form id="search-field" action="index.html" method="get">
+      <input id="searchValue" type="text" Value=" "> </input>
+      <input type="submit" Value="Search">
+    </form>
+
+<!-- TRIED TO CREATE A EVENTLISTENER THAT WOULD CONNECT WITH THE FUNCTION WE DID IN THE JS FILE
+    DOESN'T WORK BUT I WANT TO HAVE A LOOK LATER.
+    <script>
+      let searchField = document.querySelectorAll('#search-field')
+
+      searchField.addEventListener("submit", function(event) {
+        let newSearch = document.querySelectorAll('Chat.searchMessages')
+        newSearch.innerHTML = document.querySelector('searchString').value
+        document.querySelector("ul").appendChild(newSearch)
+        event.preventDefault()
+      })
+
+    </script> -->
+
+<!-- List of online users -->
+    <h2> Online Users </h2>
+    <ul>
+      <li> Lena Buhl </li>
+      <li> Nathalia Novais </li>
+
+    </div>
 
 
 </body>
