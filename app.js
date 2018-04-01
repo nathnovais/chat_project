@@ -53,24 +53,59 @@ var Chat = (function() {
     }
 
     // method for creating a new message
-  module.sendChat = function(Message) {
-      //censoring message:
+    module.sendChat = function(Message) {
+      //censoring variables
       let badWords = false
+      let censoredWords = [
+        'fuck',
+        'shit',
+        'crap',
+      ]
 
-      if (Message.text.indexOf('fuck') != -1) { //using text variable to find words in the message.
+      //selecting message input value
+      let messageValue = document.querySelector('#chatMessage').value
+      messageValue.innerHTML = Message.text
+      let currentUser = document.querySelector('#user').value
+      //currentUser.innerHTML = User.username - IT DOESNT WORK!
+
+      if (messageValue.indexOf(censoredWords) != -1) { //using text variable to find words in the message.
           badWords = true;
           //console.log('it found a bad word')
       }
 
-     if (Message != null && badWords == false) {
-        messages.push(Message)
-        console.log("Show all messages: ", messages)
-      } else {
-        badMessages.push(Message)
-        console.log("Message is not allowed", badMessages)
+      if (messageValue != null && badWords == false) {
+        //messages.push(messageValue)
+        //creating a new message and User
+        currentUser = document.createElement('b')
+        let newMessage = document.createElement('p')
+        newMessage.innerHTML = messageValue.value
+        //selecting list-array to add new message
+        messages = document.querySelector('#message')
+        //adding message to List
+        messages.appendChild(newMessage)
+        //creating a blank field for next message
+        messageValue.value = ''
+        Message.preventDefault()
+        console.log("Show all messages: ", Message)
 
-      }
-  }
+
+      } else {
+        //badMessages.push(Message)
+        //creating a new message --> just an idea - it makes sense for me but it doesnt work
+        let User = document.createElement('b')
+        let newBadMessage = document.createElement('p')
+        newBadMessage.innerHTML = MessageValue.value
+        //selecting list to add new message
+        badMessages = document.querySelector('#messageList')
+        //adding message to List
+        badMessages.appendChild(newBadMessage)
+        //creating a blank field for next message
+        messageValue.value = ''
+        Message.preventDefault()
+        //console.log("Message is not allowed", badMessages)
+
+        }
+    }
 
 
     //searching within messages

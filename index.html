@@ -7,74 +7,113 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
   <!-- I just added his because I couldn't find anything and didn't want to spend time on this part -->
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Chat App</title>
 </head>
 
 <body>
   <script src="app.js" charset="utf-8"></script>
-<!-- welcome message to user - I don't know how to connect username. -->
-  <h1> Welcome, user?? </h1>
 
-<!-- Div for creating the message box -->
-  <div class="boxMessage">
-
-    <ul>
-      <li> Hello </li>
-    </ul>
+  <!-- Login -->
+  <div class='loginWrapper'>
+    <h1> Welcome to Chat app </h1>
+    <p> Enter your name to continue </p>
+    <form id="loginForm" action="index.html" method="post">
+      <input id="usernameValue" type="text" name="username" value="insert username here"> </input>
+      <input id="usernameButton" type="button" onclick="Chat.joinChat()" name="send" value="Send">
+    </form>
   </div>
 
-<!-- form and eventListener works showing the message like the shoppingList,
-but we need to connect to the functions and arrays in the JS file. -->
-    <form id="messageForm" action="index.html" method="post">
-      <input id="messageValue" type="text" value=" "> </input>
-      <input id="sendButton" type="submit" value="Send">
-    </form>
+  <!-- Div for creating the message box -->
+  <div class="container-fluid">
+    <div class="row main">
+      <div class="col-9" id="chat-window">
+        <h3> Welcome Walter White </h3>
+        <div class="media my-3 chat-message">
+          <img src="http://www.uelgames.org/images/Images/Graduates/Default.png" class="mr-3 rounded">
+          <div class="media-body">
+            <div class="mt-0"><b id="user">Walter White</b></div>
+            <p>
+              Hello!
+            </p>
+          </div>
+        </div>
+        <div class="media my-3 chat-message">
+          <img src="http://www.uelgames.org/images/Images/Graduates/Default.png" class="mr-3 rounded">
+          <div class="media-body">
+            <div class="mt-0"><b id="user">Walter White</b></div>
+              <p id="message"> </p>
+                <!-- message here -->
+          </div>
+        </div>
+      </div>
 
-  </div>
+      <!-- This is hidden by using the class .hidden -->
+<!-- Search results field: -->
+      <div class="col-9 hidden" id="search-window">
+        <h3 class="mt-3 ">
+          Search results: <span class="text-secondary" id="search-window-string"></span>
+        </h3>
+        <hr>
+        <div class="messages" id="search-window-results">
+          <!-- Search results -->
+        </div>
+      </div>
+<!-- Search input field: -->
+      <div class="col-3 user-list bg-light">
+        <div class="row">
+          <div class="col">
+            <form id="search-form">
+              <div class="input-group input-group-sm mt-3 mb-1">
+                <input type="text" class="form-control" id="search-input" placeholder="Search here...">
+                <div class="input-group-append">
+                  <button class="btn btn-secondary">Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 
-<!-- eventListener for message form -->
-  <script>
-    let messageForm = document.querySelector('#messageForm')
-
-    messageForm.addEventListener("submit", function(event) {
-      let newMessage = document.createElement('li')
-      newMessage.innerHTML = document.querySelector('#messageValue').value
-      document.querySelector("ul").appendChild(newMessage)
-      event.preventDefault()
-    })
-  </script>
-
-<!-- Div for creating online users box -->
-  <div class="usersBox">
-
-<!-- form for searching messages - I though it could be on top of the users list -->
-    <form id="search-field" action="index.html" method="get">
-      <input id="searchValue" type="text" Value=" "> </input>
-      <input type="submit" Value="Search">
-    </form>
-
-<!-- TRIED TO CREATE A EVENTLISTENER THAT WOULD CONNECT WITH THE FUNCTION WE DID IN THE JS FILE
-    DOESN'T WORK BUT I WANT TO HAVE A LOOK LATER.
-    <script>
-      let searchField = document.querySelectorAll('#search-field')
-
-      searchField.addEventListener("submit", function(event) {
-        let newSearch = document.querySelectorAll('Chat.searchMessages')
-        newSearch.innerHTML = document.querySelector('searchString').value
-        document.querySelector("ul").appendChild(newSearch)
-        event.preventDefault()
-      })
-
-    </script> -->
-
-<!-- List of online users -->
-    <h2> Online Users </h2>
-    <ul>
-      <li> Lena Buhl </li>
-      <li> Nathalia Novais </li>
-
+<!-- List of connected users: -->
+        <div class="row">
+          <div class="col">
+            <ul class="p-0" id="chat-users">
+              <li class="media my-2">
+                <img src="http://placehold.it/20x20" class="align-self-center mr-2 rounded">
+                <div class="media-body">
+                  <b class="text-secondary">walter</b>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
+<!-- Input field for new message -->
+    <div class="row messageInput bg-light">
+      <div class="col align-self-center">
+        <form id="chat-form">
+          <div class="input-group">
+            <input type="text" class="form-control" id="chatMessage" placeholder="Enter message...">
+            <div class="input-group-append">
+              <button class="btn btn-primary" id="sendButton">Send</button>
+
+
+              <script>
+              //selecting form
+              let messageForm = document.querySelector('#chat-form')
+              //adding eventListener to form calling sendChat method
+              messageForm.addEventListener('submit', Chat.sendChat);
+
+
+            </script>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 
 
 </body>
