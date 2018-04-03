@@ -53,7 +53,7 @@ var Chat = (function() {
     }
 
     // method for creating a new message
-    module.sendChat = function(Message) {
+    module.sendChat = function(message) {
       //censoring variables
       let badWords = false
       let censoredWords = [
@@ -62,41 +62,29 @@ var Chat = (function() {
         'crap',
       ]
 
-      //selecting message input value
-      let messageValue = document.querySelector('#chatMessage').value
-      messageValue.innerHTML = Message.text
-      let currentUser = document.querySelector('#user').value
-      //currentUser.innerHTML = User.username - IT DOESNT WORK!
-
-      if (messageValue.indexOf(censoredWords) != -1) { //using text variable to find words in the message.
+      if (message.text.indexOf(censoredWords) != -1) { //using text variable to find words in the message.
           badWords = true;
           //console.log('it found a bad word')
       }
 
-      if (messageValue != null && badWords == false) {
-        //messages.push(messageValue)
+      if (message.text != null && badWords == false) {
+        messages.push(message)
         //creating a new message and User
-        currentUser = document.createElement('b')
         let newMessage = document.createElement('p')
-        newMessage.innerHTML = messageValue.value
-        //selecting list-array to add new message
-        messages = document.querySelector('#message')
+        newMessage.innerHTML = message.text
         //adding message to List
-        messages.appendChild(newMessage)
+        document.querySelector("#message").appendChild(newMessage)
         //creating a blank field for next message
-        messageValue.value = ''
-        Message.preventDefault()
-        console.log("Show all messages: ", Message)
+        message.value = ''
+        console.log("Show all messages: ", messages)
 
 
       } else {
-        //badMessages.push(Message)
+        badMessages.push(Message)
         //creating a new message --> just an idea - it makes sense for me but it doesnt work
         let User = document.createElement('b')
         let newBadMessage = document.createElement('p')
-        newBadMessage.innerHTML = MessageValue.value
-        //selecting list to add new message
-        badMessages = document.querySelector('#messageList')
+        newBadMessage.innerHTML = message.value
         //adding message to List
         badMessages.appendChild(newBadMessage)
         //creating a blank field for next message
@@ -124,6 +112,19 @@ var Chat = (function() {
 //End of module
   return module;
 })()
+
+//selecting form
+let messageForm = document.querySelector('#chat-form')
+//adding eventListener to form calling sendChat method
+messageForm.addEventListener('submit', function(event) {
+  event.preventDefault()
+  // this should create the new instance of message
+  let messageValue = document.querySelector('#chatMessage').value
+  let message = new Message(messageValue, 'userFake')
+  //calling method to send message
+  Chat.sendChat(message)
+
+})
 
 
 //FOR TESTING:
