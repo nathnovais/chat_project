@@ -56,41 +56,38 @@ var Chat = (function() {
     module.sendChat = function(message) {
       //censoring variables
       let badWords = false
-      let censoredWords = [
-        'fuck',
-        'shit',
-        'crap',
-      ]
+      let censoredWords = 'fuck'
 
       if (message.text.indexOf(censoredWords) != -1) { //using text variable to find words in the message.
-          badWords = true;
-          //console.log('it found a bad word')
+        badWords = true;
+        console.log('it found a bad word')
       }
 
       if (message.text != null && badWords == false) {
         messages.push(message)
-        //creating a new message and User
+        //creating a new message
         let newMessage = document.createElement('p')
         newMessage.innerHTML = message.text
         //adding message to List
         document.querySelector("#message").appendChild(newMessage)
-        //creating a blank field for next message
-        message.value = ''
+        //creating a blank field for next message --> IT DOESNT WORK, WHY?
+        //messageValue = ' '
         console.log("Show all messages: ", messages)
 
 
       } else {
         badMessages.push(Message)
-        //creating a new message --> just an idea - it makes sense for me but it doesnt work
-        let User = document.createElement('b')
+        //creating a new message
         let newBadMessage = document.createElement('p')
-        newBadMessage.innerHTML = message.value
+        //message response variable
+        let badMesageResponse = 'Message is not allowed, try again.'
+        //adding badMessageResponse to the element created
+        newBadMessage.innerHTML = badMesageResponse
         //adding message to List
-        badMessages.appendChild(newBadMessage)
-        //creating a blank field for next message
-        messageValue.value = ''
-        Message.preventDefault()
-        //console.log("Message is not allowed", badMessages)
+        document.querySelector('#message').appendChild(newBadMessage)
+        //creating a blank field for next message --> IT DOESNT WORK
+        //message.value = ''
+        console.log("Message is not allowed", badMessages)
 
         }
     }
@@ -123,7 +120,7 @@ messageForm.addEventListener('submit', function(event) {
   let message = new Message(messageValue, 'userFake')
   //calling method to send message
   Chat.sendChat(message)
-
+  
 })
 
 
