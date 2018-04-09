@@ -34,15 +34,21 @@ var Chat = (function() {
           if(users[i].username === User.username) {
             userAlreadyConnected = true
           }
-        }
+      }
 
-
-        if (userAlreadyConnected) {
+      if (userAlreadyConnected) {
         console.log('Username is already taken or user is already connected', users)
-      } else {
+      }
+      else {
         users.push(User)
+//For writing the connected users to the html-list:
+        let newUser = document.createElement('li')
+        newUser.innerHTML = User.username
+        document.querySelector("#chat-users").appendChild(newUser)
+
         console.log(User.username + ' is joining chat', users)
       }
+
   }
 
   //a user needs to be able to leave
@@ -110,6 +116,10 @@ var Chat = (function() {
   return module;
 })()
 
+
+//For adding to the HTML Document:
+
+//New message:
 //selecting form
 let messageForm = document.querySelector('#chat-form')
 //adding eventListener to form calling sendChat method
@@ -120,8 +130,11 @@ messageForm.addEventListener('submit', function(event) {
   let message = new Message(messageValue, 'userFake')
   //calling method to send message
   Chat.sendChat(message)
-  
+
 })
+
+
+
 
 
 //FOR TESTING:
