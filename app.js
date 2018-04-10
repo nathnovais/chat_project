@@ -41,7 +41,7 @@ var Chat = (function() {
       }
       else {
         users.push(User)
-//For writing the connected users to the html-list:
+  //For writing the connected users to the html-list:
         let newUser = document.createElement('li')
         newUser.innerHTML = User.username
         document.querySelector("#chat-users").appendChild(newUser)
@@ -72,8 +72,8 @@ var Chat = (function() {
       if (message.text != null && badWords == false) {
         messages.push(message)
         //creating a new message
-        let newMessage = document.createElement('p')
-        newMessage.innerHTML = message.text
+        let newMessage = document.createElement('p') //insertAdjecentHTML -('beforeend', ...)
+        newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}`
         //adding message to List
         document.querySelector("#message").appendChild(newMessage)
         //creating a blank field for next message --> IT DOESNT WORK, WHY?
@@ -100,15 +100,23 @@ var Chat = (function() {
 
 
     //searching within messages
-  module.searchMessages = function(searchString) {
+  module.searchMessages = function(searchValue) {
       //making a new array with the messages from matching searchString either for text or user
       let results = messages.filter(currentMessage => {
         //condition of search: author and content
-              console.log("search was done"); // SHOWS THAT THE METHOD IS NOT RUN IN THE HTML
-        return (currentMessage.text.indexOf(searchString) != -1) || (currentMessage.User.username.indexOf(searchString) != -1)
+        console.log("search was done"); // SHOWS THAT THE METHOD IS NOT RUN IN THE HTML
+        return (currentMessage.text.indexOf(searchValue) != -1) || (currentMessage.User.username.indexOf(searchValue) != -1)
+
       })
 
+      //trying to create a list of messages
+      let searchResults = document.createElement('li')
+      searchResults.innerHTML = results.text
+      document.querySelector('#results-list').appendChild(searchResults)
+
+      //returning the array:
       return results;
+
   }
 
 
@@ -133,8 +141,22 @@ messageForm.addEventListener('submit', function(event) {
 
 })
 
+//Searching:
+let messageSearch = document.querySelector('#search-form')
+messageSearch.addEventListener('submit', function(event) {
+  event.preventDefault()
+  //selecting input value
+  let searchValue = document.querySelector('#search-input').value
+  //calling method
+  console.log("method is called")
+  let results = Chat.searchMessages(searchValue)
+  console.log("search results", results)
 
+  results.forEach(result => {
 
+  })
+
+})
 
 
 //FOR TESTING:
