@@ -1,7 +1,7 @@
 //User constructor
-function User (username, email) {
+function User (username, password) {
   this.username = username
-  this.email = email
+  this.password = password
 }
 
 // message constructor
@@ -161,9 +161,9 @@ messageSearch.addEventListener('submit', function(event) {
 
 
 //FOR TESTING:
-let user1 = new User("Nat", "email@asd.se");
-let user2 = new User("Lena", "email@asd.se");
-let user3 = new User("Test", "test@asd.se");
+let user1 = new User("Nat", "123456");
+let user2 = new User("Lena", "1234");
+let user3 = new User("Test", "56789");
 
 
 let message1 = new Message("Testing if it works", user1);

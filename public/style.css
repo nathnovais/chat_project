@@ -5,3 +5,14 @@ body {
 #search-window {
   float: right;
 }
+
+h1 {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.loginWrapper {
+  box-sizing: border-box;
+  margin: auto;
+  width: 200px;
+}

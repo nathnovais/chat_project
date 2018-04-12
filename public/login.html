@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- I just added his because I couldn't find anything and didn't want to spend time on this part -->
+  <link rel="stylesheet" href="style.css">
+  <title>Chat App</title>
+</head>
+
+<body>
+
+<h1> Welcome to the Chat app </h1>
+
+<br>
+
+  <!-- Login form -->
+  <div class='loginWrapper'>
+    <p><b>Login to continue:</b></p>
+    <form id="loginForm" action="login.html" method="post">
+      <input id="usernameValue" type="text" name="username" value="insert username here"> </input>
+      <input type="password" name="password" value="password">
+      <input id="loginButton" type="submit" name="login" value="Login">
+    </form>
+  </div>
+
+<br>
+
+<!-- Sign-up form -->
+  <div class='loginWrapper'>
+    <p><b>Or sign-up below:</b></p>
+    <form id="signupForm" action="login.html" method="post">
+      <input id="newUsername" type="text" name="newUsername" value="insert username here"> </input>
+      <input id="newPassword" type="password" name="newPassword" value="password">
+      <input id="signupButton" type="submit" name="send" value="Send">
+    </form>
+  </div>
+
+
+
+
+
+  <script src="app.js" charset="utf-8"></script>
+
+
+</body>
+</html>
