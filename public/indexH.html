@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Chat API</title>
+</head>
+<body>
+    <h1>Simple Chat API</h1>
+
+    <!-- Simple form for sending messages -->
+    <form id="form">
+        <input type="text" id="message">
+        <input type="submit" value="Send">
+    </form>
+
+    <!-- 
+        Form for updating messages where you manually input the ID
+        of the message you want to update
+    -->
+    <form id="update">
+        <input type="text" id="id">
+        <input type="text" id="text">
+        <input type="submit" value="Update">
+    </form>
+
+    <!-- Simple unordered list to contain our messages -->
+    <ul id="messages"></ul>
+
+    <script>
+        // Function to get messages from the API
+        // Returns a promise
+        function getMessages() {
+            // Set the options for the fetch() method
+            // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+            let options = {
+                method: 'get'
+            }
+
+            // Return the promise that fetch returns
+            return fetch('/api/messages', options)
+            .then(response => response.json())
+        }
+
+        // Function to display our messages fetched from the API
+        // Expects messages to be an array of message objects with id and text properties
+        function displayMessages(messages) {
+            // Select our container for the messages
+            let list = document.querySelector('#messages')
+
+            // Empty HTML string
+            let html = ''
+
+            // Build up the HTML to be added to the container
+            // Wrap message objects id and text properties in a <li> tag
+            messages.forEach(message => {
+                html += `<li>(#${message.id}) | ${message.text}</li>`
+            })
+
+            // Set the container's HTML
+            // The html variable now contains the messages
+            list.innerHTML = html
+        }
+
+        // Call the getMessages() function
+        // and then call displayMessages() function to display messages
+        getMessages().then(displayMessages)
+
+        // Select the input form which contains the message field
+        let form = document.querySelector('#form')
+
+        // Listen for when the form gets submitted
+        form.addEventListener('submit', e => {
+            // Prevent the default behaviour
+            e.preventDefault()
+
+            // Select the message input field
+            let input = document.querySelector('#message')
+
+            // The data to be send to the endpoint
+            let data = {
+                text: input.value
+            }
+
+            // Set the options for the fetch() method
+            // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+            let options = {
+                method: 'post', // HTTP request method
+                headers: {
+                    'content-type': 'application/json' // Header to inform what kind of content we are sending
+                },
+                body: JSON.stringify(data) // Convert our data to JSON
+            }
+
+            // Perform the request
+            fetch('/api/messages', options)
+            .then(response => response.json())
+            .then(json => {
+                // Check the response in the console
+                console.log('Response', json)
+
+                // Run the getMessages() method
+                // and run the displayMessages() to display the response
+                // from the API
+                getMessages().then(displayMessages)
+
+                // Reset the input value
+                input.value = ''
+            })
+        })
+
+        // Select the update form and listen for when it is submitted
+        document.querySelector('#update').addEventListener('submit', e => {
+            // Prevent default behaviour
+            e.preventDefault()
+
+            // Select the two input field's values
+            let id = document.querySelector('#id').value
+            let text = document.querySelector('#text').value
+
+            // Set the options for fetch()
+            let options = {
+                method: 'put',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ text }) // Same as { text: text }
+            }
+
+            // Perform the request
+            fetch('/api/messages/' + id, options)
+            .then(response => response.json())
+            .then(json => {
+                // Display the response in the console
+                console.log('Updated', json)
+
+                // Update the message and display them
+                getMessages().then(displayMessages)
+            })
+        })
+    </script>
+</body>
+</html>
