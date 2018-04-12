@@ -72,8 +72,8 @@ var Chat = (function() {
       if (message.text != null && badWords == false) {
         messages.push(message)
         //creating a new message
-        let newMessage = document.createElement('p') //insertAdjecentHTML -('beforeend', ...)
-        newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}`
+        let newMessage = document.createElement('p') //A method he jused: insertAdjecentHTML -('beforeend', ...)
+        newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}` //this could be a way where we could display user + message
         //adding message to List
         document.querySelector("#message").appendChild(newMessage)
         //creating a blank field for next message --> IT DOESNT WORK, WHY?
@@ -108,11 +108,6 @@ var Chat = (function() {
         return (currentMessage.text.indexOf(searchValue) != -1) || (currentMessage.User.username.indexOf(searchValue) != -1)
 
       })
-
-      //trying to create a list of messages
-      let searchResults = document.createElement('li')
-      searchResults.innerHTML = results.text
-      document.querySelector('#results-list').appendChild(searchResults)
 
       //returning the array:
       return results;
@@ -153,7 +148,13 @@ messageSearch.addEventListener('submit', function(event) {
   console.log("search results", results)
 
   results.forEach(result => {
+      //here we can write how it should be displayed
+      //but we can see now in the console that it works
 
+      //I just added something so we can see it in the html
+      let each = document.createElement('li')
+      each.innerHTML = `<b>${result.user}:</b> ${result.text}`
+      document.querySelector('#results-list').appendChild(each)
   })
 
 })
