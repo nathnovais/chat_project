@@ -1,5 +1,12 @@
 // Include Express module
 const express = require('express')
+// Include sequelize
+const Sequelize = require('sequelize')
+
+//setup sequelize to SQLite database --> NOT COMPLETE!!!!!!!!
+const sequelize = new Sequelize('sqlite:./data/database.sqlite', {
+    loggin: console.log
+})
 
 // Create an instance of Express
 const app = express()
@@ -22,7 +29,7 @@ app.get('/api/messages', (req, res) => {
 })
 
 // GET /api/messages/:id endpoint
-// Returns a specific message 
+// Returns a specific message
 app.get('/api/messages/:id', (req, res) => {
     // Find first message that matches the ID from the route
     // Documentation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
@@ -44,6 +51,7 @@ app.get('/api/messages/:id', (req, res) => {
 app.post('/api/messages', (req, res) => {
     // Simple validation for text property
     if (!req.body.text) {
+// HERE WE CAN ADD SOME MORE VALIDATION OF THE MESSAGE - IF-STATEMENTS
         // "return" ends the script here
         // with the JSON response
         return res.json({
@@ -55,11 +63,19 @@ app.post('/api/messages', (req, res) => {
     let message = {
         id: messages.length + 1,
         text: req.body.text,
-        createdAt: new Date()
+        createdAt: new Date(),
+        user: "testuser"
     }
 
     // Push the message object into the messages array
     messages.push(message)
+/*  Message.create({
+      text: text
+    })
+    .then(message => {
+        // put here the response the (res.status(201)...)
+    })
+*/
 
     // Return a status 201 (created) response
     res.status(201).json({

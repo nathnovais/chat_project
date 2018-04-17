@@ -58,8 +58,39 @@ var Chat = (function() {
       console.log(users)
     }
 
+    //method for showing all methods
+  module.displayMessages = function(messages) {
+
+    /*
+        messages.forEach(message) {
+          let singleMessage = document.createElement('li')
+          singleMessage.innerHTML = message.text
+      }  */
+
+    //just for testing part 3:
+    //it is probably not the right place to put it
+    fetch('/api/messages')
+      .then(response => response.json())
+      .then(data => {
+      // Display the fetched messages in the browser:
+      //forEach
+          data.forEach(message => {
+            let newMessage = document.createElement('p')
+            newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}`
+            //adding message to List
+            document.querySelector("#chat-window").appendChild(newMessage)
+            console.log("fetch messages method is run")
+          })
+
+      })
+      //end of test^
+
+
+
+  }
+
     // method for creating a new message
-    module.sendChat = function(message) {
+    module.oldSendChat = function(message) {
       //censoring variables
       let badWords = false
       let censoredWords = 'fuck'
@@ -71,19 +102,6 @@ var Chat = (function() {
 
       if (message.text != null && badWords == false) {
 
-//just for testing part 3:
-//it is probably not the right place to put it
-        fetch('/api/messages')
-          .then(response => response.json())
-          .then(data => {
-              // Display the fetched messages in the browser:
-              let newMessage = document.createElement('p')
-              newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}`
-              //adding message to List
-              document.querySelector("#chat-window").appendChild(newMessage)
-          })
-//end of test^
-
         messages.push(message)
         //creating a new message
         let newMessage = document.createElement('p') //A method he jused: insertAdjecentHTML -('beforeend', ...)
@@ -94,24 +112,6 @@ var Chat = (function() {
         //messageValue = ' '
         console.log("Show all messages: ", messages)
 
-//just for testing part 3 (part 2 of it):
-//again, not sure about it...
-        fetch('/api/messages', {
-              method: 'post',
-              credentials: 'include',
-              body: JSON.stringify(message),
-              headers: {
-                  'content-type': 'application/json'
-              }
-        })
-          .then(response => response.json())
-          .then(data => {
-              // Do something when the message was saved
-              // Perhaps clear the input field or remove a loading indicator
-              console.log('is this happeing?')
-
-          })
-//end of test2^
 
 
       } else {
@@ -129,6 +129,40 @@ var Chat = (function() {
         console.log("Message is not allowed", badMessages)
 
         }
+    }
+
+//new sendChat method connecting with API
+    module.sendChat = function(message) {
+      //just for testing part 3 (part 2 of it):
+      //fetching message from the API
+              fetch('/api/messages', {
+                    method: 'post',
+                    credentials: 'include',
+                    body: JSON.stringify(message),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+              })
+                .then(response => response.json())
+                .then(data => {
+                    // server status ok
+                    if (data.status == "OK") {
+                      //html
+                      let newMessage = document.createElement('p') //A method he jused: insertAdjecentHTML -('beforeend', ...)
+                      newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}` //this could be a way where we could display user + message
+                      //adding message to List
+                      document.querySelector("#message").appendChild(newMessage)
+                      //creating a blank field for next message --> IT DOESNT WORK, WHY?
+                      //messageValue = ' '
+                      console.log("Show all messages: ", messages)
+                    }
+                    // Do something when the message was saved
+                    // Perhaps clear the input field or remove a loading indicator
+                    document.querySelector('#chatMessage').value = ' '
+                    console.log('is this happeing?')
+
+                })
+
     }
 
 
@@ -194,7 +228,7 @@ messageSearch.addEventListener('submit', function(event) {
 
 
 //FOR TESTING:
-let user1 = new User("Nat", "123456");
+/* let user1 = new User("Nat", "123456");
 let user2 = new User("Lena", "1234");
 let user3 = new User("Test", "56789");
 
@@ -209,6 +243,8 @@ Chat.sendChat(message3)
 Chat.sendChat(new Message('Hohoho', user2));
 
 Chat.joinChat(user1);
-Chat.joinChat(user2);
+Chat.joinChat(user2); */
+
+Chat.displayMessages()
 
 //Chat.searchMessages(); */
