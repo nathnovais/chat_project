@@ -70,6 +70,20 @@ var Chat = (function() {
       }
 
       if (message.text != null && badWords == false) {
+
+//just for testing part 3:
+//it is probably not the right place to put it
+        fetch('/api/messages')
+          .then(response => response.json())
+          .then(data => {
+              // Display the fetched messages in the browser:
+              let newMessage = document.createElement('p')
+              newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}`
+              //adding message to List
+              document.querySelector("#chat-window").appendChild(newMessage)
+          })
+//end of test^
+
         messages.push(message)
         //creating a new message
         let newMessage = document.createElement('p') //A method he jused: insertAdjecentHTML -('beforeend', ...)
@@ -79,6 +93,25 @@ var Chat = (function() {
         //creating a blank field for next message --> IT DOESNT WORK, WHY?
         //messageValue = ' '
         console.log("Show all messages: ", messages)
+
+//just for testing part 3 (part 2 of it):
+//again, not sure about it...
+        fetch('/api/messages', {
+              method: 'post',
+              credentials: 'include',
+              body: JSON.stringify(message),
+              headers: {
+                  'content-type': 'application/json'
+              }
+        })
+          .then(response => response.json())
+          .then(data => {
+              // Do something when the message was saved
+              // Perhaps clear the input field or remove a loading indicator
+              console.log('is this happeing?')
+
+          })
+//end of test2^
 
 
       } else {

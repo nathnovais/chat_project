@@ -20,8 +20,8 @@
   <div class='loginWrapper'>
     <p><b>Login to continue:</b></p>
     <form id="loginForm" action="login.html" method="post">
-      <input id="usernameValue" type="text" name="username" value="insert username here"> </input>
-      <input type="password" name="password" value="password">
+      <input id="usernameValue" type="text" onclick="this.value=''" name="username" value="insert username here"> </input>
+      <input type="password" onclick="this.value=''" name="password" value="password">
       <input id="loginButton" type="submit" name="login" value="Login">
     </form>
   </div>
@@ -32,8 +32,8 @@
   <div class='loginWrapper'>
     <p><b>Or sign-up below:</b></p>
     <form id="signupForm" action="login.html" method="post">
-      <input id="newUsername" type="text" name="newUsername" value="insert username here"> </input>
-      <input id="newPassword" type="password" name="newPassword" value="password">
+      <input id="newUsername" type="text" onclick="this.value=''" name="newUsername" value="insert username here"> </input>
+      <input id="newPassword" type="password" onclick="this.value=''" name="newPassword" value="password">
       <input id="signupButton" type="submit" name="send" value="Send">
     </form>
   </div>
