@@ -151,7 +151,7 @@ var Chat = (function() {
                       let newMessage = document.createElement('p') //A method he jused: insertAdjecentHTML -('beforeend', ...)
                       newMessage.innerHTML = `<b>${message.user}:</b> ${message.text}` //this could be a way where we could display user + message
                       //adding message to List
-                      document.querySelector("#message").appendChild(newMessage)
+                      document.querySelector("#chat-window").appendChild(newMessage)
                       //creating a blank field for next message --> IT DOESNT WORK, WHY?
                       //messageValue = ' '
                       console.log("Show all messages: ", messages)

@@ -17,9 +17,19 @@ app.use(express.json())
 // Serve static files from public folder
 app.use(express.static('public'))
 
+//message model:
+const Message = sequelize.define('message', {
+  text: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+})
+
+
 // Simple in-memory storage
 // Note: Will be lost when script is terminated
 let messages = []
+
 
 // GET /api/messages endpoint
 // Returns all messages
@@ -60,7 +70,7 @@ app.post('/api/messages', (req, res) => {
     }
 
     // Construct a simple message object
-    let message = {
+      let message = {
         id: messages.length + 1,
         text: req.body.text,
         createdAt: new Date(),
@@ -69,18 +79,19 @@ app.post('/api/messages', (req, res) => {
 
     // Push the message object into the messages array
     messages.push(message)
-/*  Message.create({
+    Message.create({
       text: text
     })
     .then(message => {
         // put here the response the (res.status(201)...)
+        res.status(201).json({
+            status: 'OK'
+        })
     })
-*/
+
 
     // Return a status 201 (created) response
-    res.status(201).json({
-        status: 'OK'
-    })
+
 })
 
 // PUT /api/messages/:id endpoint
